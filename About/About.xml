@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<packageId>Buggy.RimWorldMod.MutatedPawn</packageId>
+	<name>Mutated Pawn</name>
+	<author>Buggy</author>
+	<supportedVersions>
+		<li>1.4</li>
+	</supportedVersions>	
+	<modDependencies>
+		<li>
+        	<packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+            <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+        </li>
+		<li>
+		    <packageId>ludeon.rimworld.biotech</packageId>
+		    <displayName>Biotech</displayName>
+		</li>
+	</modDependencies>   
+	<description>Allow any pawn a chance to have random genes with the following configurations:
+[list]
+[*]Maximum number of mutations can occur in a pawn (hard limit 10).
+[*]The chance for a mutation to occur.
+[*]Mutated genes can be endogene or xenogene.
+[*]Allow archite genes.
+[*]Allow metabolic effciency less than -5.
+[/list]
+
+New players who are not familiar with intial genes of a xenotype might have problem distiguish original genes from mutated ones. I want to draw a border on mutated genes, but don't know how at the moment. Any help would be greatly appreciated!
+
+It can be safely added mid-game and should not conflict with any mods. If added mid-game, it does not affected existing pawns.
+
+If you like this mod, maybe check out my other one:
+Permanent Injury Letter https://steamcommunity.com/sharedfiles/filedetails/?id=2592535960
+More Biotech Letters https://steamcommunity.com/sharedfiles/filedetails/?id=2889303626
+Billed Deep Drill https://steamcommunity.com/sharedfiles/filedetails/?id=2593197871
+
+It would be great to receive feedback, suggestions or pointers on how to improve.Hope these mods help!
+
+Cheers!
+
+Version history
+[b]v0.1[/b]
+[list]
+[*]Initial release.
+[/list]</description>
+</ModMetaData>
