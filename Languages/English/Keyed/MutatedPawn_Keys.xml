@@ -11,7 +11,7 @@
 	<Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip>Default: Mutated genes can only be endogenes</Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip>
 	<Buggy_MP_Option_AllowedMutatedArchiteGenes>Mutated genes can be archite genes</Buggy_MP_Option_AllowedMutatedArchiteGenes>
 	<Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip>Defaul: Mutated genes can not be archite genes</Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip>
-	<Buggy_MP_Option_AllowedLowerThanMinMetabolicEff>Mutated genes can result in a metabolic efficiency lower than -5</Buggy_MP_Option_AllowedLowerThanMinMetabolicEff>
-	<Buggy_MP_Option_AllowedLowerThanMinMetabolicEff_Tooltip>Default: Mutated gene that results in a metabolic efficiency lower than 5 will be skipped</Buggy_MP_Option_AllowedLowerThanMinMetabolicEff_Tooltip>
+	<Buggy_MP_Option_MinimumMetabolicEffForMutatedGen>Minimum metabolic efficiency allowed when generating mutation</Buggy_MP_Option_MinimumMetabolicEffForMutatedGen>
+	<Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip>The minimum metabolic efficiency allowed used by ONLY this mod. Default is -5</Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip>
 	<Buggy_MP_Option_Debug>Log debug messages</Buggy_MP_Option_Debug>
 </LanguageData>

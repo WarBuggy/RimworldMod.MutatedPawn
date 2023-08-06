@@ -13,7 +13,7 @@ namespace Buggy.RimworldMod.MutatedPawn
     {
         private static readonly List<GeneDef> _genes = DefDatabase<GeneDef>.AllDefs.ToList();
         private static readonly List<GeneDef> _disableViolentGenes = GetDisableViolentGenes(_genes);
-        private static readonly int _minMetabolicEff = -5;
+        private static int _minMetabolicEff = -5;
 
         public static void Postfix(Pawn pawn, XenotypeDef xenotype, PawnGenerationRequest request)
         {
@@ -21,7 +21,7 @@ namespace Buggy.RimworldMod.MutatedPawn
             var percentChanceToHaveAMutatedGene = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().percentChanceToHaveAMutatedGene;
             var allowedMutatedXenoGene = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().allowedMutatedXenoGene;
             var allowedMutatedArchiteGenes = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().allowedMutatedArchiteGenes;
-            var allowedLowerThanMinMetabolicEff = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().allowedLowerThanMinMetabolicEff;
+            _minMetabolicEff = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().minimumMetabolicEffAllowed;
             var debug = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().debug;
 
             var allGenes = new List<GeneDef>(_genes);
@@ -54,7 +54,7 @@ namespace Buggy.RimworldMod.MutatedPawn
                 var geneset = CreateGeneSetFromPawn(pawn);
                 var geneDef = allGenes[index];
                 geneset.AddGene(geneDef);
-                if (!allowedLowerThanMinMetabolicEff && geneset.MetabolismTotal < _minMetabolicEff)
+                if (geneset.MetabolismTotal < _minMetabolicEff)
                 {
                     if (debug)
                     {

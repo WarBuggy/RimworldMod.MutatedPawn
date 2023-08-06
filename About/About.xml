@@ -24,7 +24,7 @@
 [*]The chance for a mutation to occur.
 [*]Mutated genes can be endogene or xenogene.
 [*]Allow archite genes.
-[*]Allow metabolic effciency less than -5.
+[*]The minimum metabolic effciency allowed, used ONLY by this mod, when deciding a mutation can happen or not. Thank 沙坡村大师 for the suggestion. 
 [/list]
 
 New players who are not familiar with intial genes of a xenotype might have problem distiguish original genes from mutated ones. I want to draw a border on mutated genes, but don't know how at the moment. Any help would be greatly appreciated!
@@ -41,6 +41,10 @@ It would be great to receive feedback, suggestions or pointers on how to improve
 Cheers!
 
 Version history
+[b]v0.2[/b]
+[list]
+[*]Expand the option to allow flexible minimum allowed metabolic efficiency.
+[/list]
 [b]v0.1[/b]
 [list]
 [*]Initial release.

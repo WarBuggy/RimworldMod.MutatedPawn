@@ -33,7 +33,7 @@ namespace Buggy.RimworldMod.MutatedPawn
             _settings.percentChanceToHaveAMutatedGene = 
                 (int) listingStandard.Slider(_settings.percentChanceToHaveAMutatedGene, 0f, 100f);
             listingStandard.GapLine();
-                        
+
             listingStandard.Gap();
             listingStandard.Gap();
             listingStandard.Label("Buggy_MP_Option_NoneLoreFriendly".Translate());
@@ -47,8 +47,10 @@ namespace Buggy.RimworldMod.MutatedPawn
                 "Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip".Translate());
             listingStandard.Gap();
 
-            listingStandard.CheckboxLabeled("Buggy_MP_Option_AllowedLowerThanMinMetabolicEff".Translate(), ref _settings.allowedLowerThanMinMetabolicEff,
-                "Buggy_MP_Option_AllowedLowerThanMinMetabolicEff_Tooltip".Translate());
+            listingStandard.Label($"{"Buggy_MP_Option_MinimumMetabolicEffForMutatedGen".Translate()}: {_settings.minimumMetabolicEffAllowed}",
+                tooltip: "Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip".Translate());
+            _settings.minimumMetabolicEffAllowed =
+               (int)listingStandard.Slider(_settings.minimumMetabolicEffAllowed, -30f, 5f);
             listingStandard.Gap();
 
             listingStandard.CheckboxLabeled("Buggy_MP_Option_Debug".Translate(), ref _settings.debug);
