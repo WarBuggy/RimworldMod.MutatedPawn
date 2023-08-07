@@ -20,7 +20,7 @@
 	</modDependencies>   
 	<description>Allow any pawn a chance to have random genes with the following configurations:
 [list]
-[*]3 different chances to have mutations, each with its own max mutation number and chance.
+[*]3 different chances to have mutations, each with its own max mutation number and chance. I stole some code from Jaxe, who is responsible for Interaction Bubble mod, to make the mod configuration panel scrollable. Hope he does not mind!
 [*]Mutated genes can be endogene or xenogene.
 [*]Allow archite genes.
 [*]The minimum metabolic effciency allowed, used ONLY by this mod, when deciding a mutation can happen or not. Thank 沙坡村大师 for the suggestion. 
