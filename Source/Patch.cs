@@ -17,8 +17,12 @@ namespace Buggy.RimworldMod.MutatedPawn
 
         public static void Postfix(Pawn pawn, XenotypeDef xenotype, PawnGenerationRequest request)
         {
-            var maxMutatedGenesAllowed = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().maxMutatedGenesAllowed;
-            var percentChanceToHaveAMutatedGene = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().percentChanceToHaveAMutatedGene;
+            var chanceDictionary = new List<(int, int)>()
+            {
+                (((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().maxMutatedGenesAllowed1stChance, ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().percentChanceToHaveAMutatedGene1stChance),
+                (((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().maxMutatedGenesAllowed2ndChance, ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().percentChanceToHaveAMutatedGene2ndChance),
+                (((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().maxMutatedGenesAllowed3rdChance, ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().percentChanceToHaveAMutatedGene3rdChance),
+            };
             var allowedMutatedXenoGene = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().allowedMutatedXenoGene;
             var allowedMutatedArchiteGenes = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().allowedMutatedArchiteGenes;
             _minMetabolicEff = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().minimumMetabolicEffAllowed;
@@ -42,39 +46,41 @@ namespace Buggy.RimworldMod.MutatedPawn
             {
                 return;
             }
-
-            var randomIndexes = GenerateRandomIndexes(allGenes.Count, maxMutatedGenesAllowed, debug);
             GeneSet chosenGenes = CreateGeneSetFromPawn(pawn);
-            foreach (var index in randomIndexes)
+            foreach ((var maxMutatedGenesAllowed, var percentChanceToHaveAMutatedGene) in chanceDictionary)
             {
-                if (!CanHaveMutatedGene(percentChanceToHaveAMutatedGene, debug))
+                var randomIndexes = GenerateRandomIndexes(allGenes.Count, maxMutatedGenesAllowed, debug);
+                foreach (var index in randomIndexes)
                 {
-                    continue;
-                }
-                var geneset = CreateGeneSetFromPawn(pawn);
-                var geneDef = allGenes[index];
-                geneset.AddGene(geneDef);
-                if (geneset.MetabolismTotal < _minMetabolicEff)
-                {
+                    if (!CanHaveMutatedGene(percentChanceToHaveAMutatedGene, debug))
+                    {
+                        continue;
+                    }
+                    GeneSet geneset = CreateGeneSetFromPawn(pawn);
+                    var geneDef = allGenes[index];
+                    geneset.AddGene(geneDef);
+                    if (geneset.MetabolismTotal < _minMetabolicEff)
+                    {
+                        if (debug)
+                        {
+                            Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} with gene {geneDef.defName} will result in a metabolic efficiency of {geneset.MetabolismTotal} (lower than {_minMetabolicEff}). This gene is skipped.");
+                        }
+                        continue;
+                    }
+                    pawn.genes.AddGene(geneDef, IsXenoGene(allowedMutatedXenoGene, debug));
+                    chosenGenes.AddGene(geneDef);
                     if (debug)
                     {
-                        Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} with gene {geneDef.defName} will result in a metabolic efficiency of {geneset.MetabolismTotal} (lower than {_minMetabolicEff}). This gene is skipped.");
+                        Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} have gene {geneDef.defName}, ({geneDef.biostatMet}) added, current metabolic efficiency {geneset.MetabolismTotal}.");
                     }
-                    continue;
-                }
-                pawn.genes.AddGene(geneDef, IsXenoGene(allowedMutatedXenoGene, debug));
-                chosenGenes.AddGene(geneDef);
-                if (debug)
-                {
-                    Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} have gene {geneDef.defName}, ({geneDef.biostatMet}) added, current metabolic efficiency {geneset.MetabolismTotal}.");
-                }
-                if (chosenGenes.GenesListForReading.Count == allGenes.Count || geneset.MetabolismTotal <= _minMetabolicEff)
-                {
-                    if (debug)
+                    if (chosenGenes.GenesListForReading.Count == allGenes.Count || geneset.MetabolismTotal <= _minMetabolicEff)
                     {
-                        Log.Message($"MutatedPawn: No more possible genes ({chosenGenes.GenesListForReading.Count}, {allGenes.Count}) or min metabolic effcient ({geneset.MetabolismTotal}) reached.");
+                        if (debug)
+                        {
+                            Log.Message($"MutatedPawn: No more possible genes ({chosenGenes.GenesListForReading.Count}, {allGenes.Count}) or min metabolic effcient ({geneset.MetabolismTotal}) reached.");
+                        }
+                        break;
                     }
-                    break;
                 }
             }
             if (debug)

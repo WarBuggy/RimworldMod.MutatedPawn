@@ -20,8 +20,7 @@
 	</modDependencies>   
 	<description>Allow any pawn a chance to have random genes with the following configurations:
 [list]
-[*]Maximum number of mutations can occur in a pawn (hard limit 10).
-[*]The chance for a mutation to occur.
+[*]3 different chances to have mutations, each with its own max mutation number and chance.
 [*]Mutated genes can be endogene or xenogene.
 [*]Allow archite genes.
 [*]The minimum metabolic effciency allowed, used ONLY by this mod, when deciding a mutation can happen or not. Thank 沙坡村大师 for the suggestion. 
@@ -41,6 +40,10 @@ It would be great to receive feedback, suggestions or pointers on how to improve
 Cheers!
 
 Version history
+[b]v0.3[/b]
+[list]
+[*]Break mutation process into 3 different groups, each with its own max mutation and chance.
+[/list]
 [b]v0.2[/b]
 [list]
 [*]Expand the option to allow flexible minimum allowed metabolic efficiency.

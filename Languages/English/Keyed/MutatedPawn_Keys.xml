@@ -2,10 +2,17 @@
 <LanguageData>
 	<Buggy_MP_Mod_Name>Mutated Pawn</Buggy_MP_Mod_Name>
 	<Buggy_MP_Option_LoreFriendly>Lore friendly options</Buggy_MP_Option_LoreFriendly>
-	<Buggy_MP_Option_MaxMutatedGenesAllowed>Maximum number of chances to have a mutated gene</Buggy_MP_Option_MaxMutatedGenesAllowed>
-	<Buggy_MP_Option_MaxMutatedGenesAllowed_Tooltip>Default: 4</Buggy_MP_Option_MaxMutatedGenesAllowed_Tooltip>
+	<Buggy_MP_Option_1stMutationChance>Configure the first group of mutations</Buggy_MP_Option_1stMutationChance>
+	<Buggy_MP_Option_2ndMutationChance>Configure the second group of mutations</Buggy_MP_Option_2ndMutationChance>
+	<Buggy_MP_Option_3rdMutationChance>Configure the third group of mutations</Buggy_MP_Option_3rdMutationChance>
+	<Buggy_MP_Option_MaxNumberOfMutation>Max number of mutations</Buggy_MP_Option_MaxNumberOfMutation>
 	<Buggy_MP_Option_ChanceToHaveAMutatedGene>Chance to have a mutated gene</Buggy_MP_Option_ChanceToHaveAMutatedGene>
-	<Buggy_MP_Option_ChanceToHaveAMutatedGene_Tooltip>Default: 5%</Buggy_MP_Option_ChanceToHaveAMutatedGene_Tooltip>
+	<Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_1stGroup_Tooltip>Default: 1</Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_1stGroup_Tooltip>
+	<Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup_Tooltip>Default: 33%</Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup_Tooltip>
+	<Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_2ndGroup_Tooltip>Default: 2</Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_2ndGroup_Tooltip>
+	<Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup_Tooltip>Default: 15%</Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup_Tooltip>
+	<Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_3rdGroup_Tooltip>Default: 1</Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_3rdGroup_Tooltip>
+	<Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup_Tooltip>Default: 5%</Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup_Tooltip>
 	<Buggy_MP_Option_NoneLoreFriendly>Non-lore friendly options</Buggy_MP_Option_NoneLoreFriendly>
 	<Buggy_MP_Option_AllowedMutatedXenoGene>Mutated genes can be xenogene</Buggy_MP_Option_AllowedMutatedXenoGene>
 	<Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip>Default: Mutated genes can only be endogenes</Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip>

@@ -7,6 +7,10 @@ namespace Buggy.RimworldMod.MutatedPawn
     {
         private readonly Settings _settings;
 
+        private static Vector2 _scrollPosition = Vector2.zero;
+        private static Rect _viewRect;
+
+
         public MutatedPawnMod(ModContentPack content)
             : base(content)
         {
@@ -15,25 +19,61 @@ namespace Buggy.RimworldMod.MutatedPawn
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            Listing_Standard listingStandard = new Listing_Standard();
-            listingStandard.Begin(inRect);
-            
-            listingStandard.GapLine();
+            inRect.yMax -= 60f;
+            DrawSettings(inRect.ContractedBy(8f, 0f));
+            base.DoSettingsWindowContents(inRect);
+        }
+
+        public void DrawSettings(Rect rect)
+        {
+            var listingRect = new Rect(rect.x, rect.y + 5f, rect.width, rect.height - 5f);
+            var listingStandard = new Listing_Settings();
+            listingStandard.Begin(rect);
+            listingStandard.End();
+            listingStandard.BeginScrollView(listingRect, ref _scrollPosition, ref _viewRect);
+
             listingStandard.Gap();
             listingStandard.Label("Buggy_MP_Option_LoreFriendly".Translate());
             listingStandard.Gap();
 
-            listingStandard.Label($"{"Buggy_MP_Option_MaxMutatedGenesAllowed".Translate()}: {_settings.maxMutatedGenesAllowed}",
-                tooltip: "Buggy_MP_Option_MaxMutatedGenesAllowed_Tooltip".Translate());
-            _settings.maxMutatedGenesAllowed = 
-                (int) listingStandard.Slider(_settings.maxMutatedGenesAllowed, 0f, 10f);
+            listingStandard.Label("Buggy_MP_Option_1stMutationChance".Translate());
+            listingStandard.Label($"{"Buggy_MP_Option_MaxNumberOfMutation".Translate()}: {_settings.maxMutatedGenesAllowed1stChance}",
+                tooltip: "Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_1stGroup_Tooltip".Translate());
+            _settings.maxMutatedGenesAllowed1stChance =
+                (int)listingStandard.Slider(_settings.maxMutatedGenesAllowed1stChance, 0f, 10f);
+            listingStandard.Label($"{"Buggy_MP_Option_ChanceToHaveAMutatedGene".Translate()}: {_settings.percentChanceToHaveAMutatedGene1stChance}%",
+                tooltip: "Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup_Tooltip".Translate());
+            _settings.percentChanceToHaveAMutatedGene1stChance =
+                (int)listingStandard.Slider(_settings.percentChanceToHaveAMutatedGene1stChance, 0f, 100f);
 
-            listingStandard.Label($"{"Buggy_MP_Option_ChanceToHaveAMutatedGene".Translate()}: {_settings.percentChanceToHaveAMutatedGene}%",
-                tooltip: "Buggy_MP_Option_ChanceToHaveAMutatedGene_Tooltip".Translate());
-            _settings.percentChanceToHaveAMutatedGene = 
-                (int) listingStandard.Slider(_settings.percentChanceToHaveAMutatedGene, 0f, 100f);
+            listingStandard.Gap();
             listingStandard.GapLine();
+            listingStandard.Gap();
+            listingStandard.Label("Buggy_MP_Option_2ndMutationChance".Translate());
+            listingStandard.Label($"{"Buggy_MP_Option_MaxNumberOfMutation".Translate()}: {_settings.maxMutatedGenesAllowed2ndChance}",
+                tooltip: "Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_2ndGroup_Tooltip".Translate());
+            _settings.maxMutatedGenesAllowed2ndChance =
+                (int)listingStandard.Slider(_settings.maxMutatedGenesAllowed2ndChance, 0f, 10f);
+            listingStandard.Label($"{"Buggy_MP_Option_ChanceToHaveAMutatedGene".Translate()}: {_settings.percentChanceToHaveAMutatedGene2ndChance}%",
+                tooltip: "Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup_Tooltip".Translate());
+            _settings.percentChanceToHaveAMutatedGene2ndChance =
+                (int)listingStandard.Slider(_settings.percentChanceToHaveAMutatedGene2ndChance, 0f, 100f);
 
+            listingStandard.Gap();
+            listingStandard.GapLine();
+            listingStandard.Gap();
+            listingStandard.Label("Buggy_MP_Option_3rdMutationChance".Translate());
+            listingStandard.Label($"{"Buggy_MP_Option_MaxNumberOfMutation".Translate()}: {_settings.maxMutatedGenesAllowed3rdChance}",
+                tooltip: "Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_3rdGroup_Tooltip".Translate());
+            _settings.maxMutatedGenesAllowed3rdChance =
+                (int)listingStandard.Slider(_settings.maxMutatedGenesAllowed3rdChance, 0f, 10f);
+            listingStandard.Label($"{"Buggy_MP_Option_ChanceToHaveAMutatedGene".Translate()}: {_settings.percentChanceToHaveAMutatedGene3rdChance}%",
+                tooltip: "Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup_Tooltip".Translate());
+            _settings.percentChanceToHaveAMutatedGene3rdChance =
+                (int)listingStandard.Slider(_settings.percentChanceToHaveAMutatedGene3rdChance, 0f, 100f);
+            
+            listingStandard.Gap();
+            listingStandard.GapLine();
             listingStandard.Gap();
             listingStandard.Gap();
             listingStandard.Label("Buggy_MP_Option_NoneLoreFriendly".Translate());
@@ -55,9 +95,8 @@ namespace Buggy.RimworldMod.MutatedPawn
 
             listingStandard.CheckboxLabeled("Buggy_MP_Option_Debug".Translate(), ref _settings.debug);
 
-            listingStandard.End();
-            base.DoSettingsWindowContents(inRect);
-    }
+            listingStandard.EndScrollView(ref _viewRect);
+        }
 
         public override string SettingsCategory()
         {
