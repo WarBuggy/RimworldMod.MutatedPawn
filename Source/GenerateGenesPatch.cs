@@ -9,7 +9,7 @@ namespace Buggy.RimworldMod.MutatedPawn
 {
     [HarmonyPatch]
     [HarmonyPatch(typeof(PawnGenerator), "GenerateGenes")]
-    public class Patch
+    public class GenerateGenesPatch
     {
         private static readonly List<GeneDef> _genes = DefDatabase<GeneDef>.AllDefs.ToList();
         private static readonly List<GeneDef> _disableViolentGenes = GetDisableViolentGenes(_genes);

@@ -71,7 +71,15 @@ namespace Buggy.RimworldMod.MutatedPawn
                 tooltip: "Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup_Tooltip".Translate());
             _settings.percentChanceToHaveAMutatedGene3rdChance =
                 (int)listingStandard.Slider(_settings.percentChanceToHaveAMutatedGene3rdChance, 0f, 100f);
-            
+
+            listingStandard.Gap();
+            listingStandard.GapLine();
+            listingStandard.Gap();
+            listingStandard.Label($"{"Buggy_MP_Option_ChanceWithCarcinomaGrowing".Translate()}: {_settings.chanceWhenCarcinomaGrowing}%",
+                tooltip: "Buggy_MP_Option_ChanceWithCarcinomaGrowing_Tooltip".Translate());
+            _settings.chanceWhenCarcinomaGrowing =
+               (int)listingStandard.Slider(_settings.chanceWhenCarcinomaGrowing, 0f, 100f);
+
             listingStandard.Gap();
             listingStandard.GapLine();
             listingStandard.Gap();

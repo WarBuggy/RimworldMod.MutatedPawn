@@ -20,5 +20,9 @@
 	<Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip>Defaul: Mutated genes can not be archite genes</Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip>
 	<Buggy_MP_Option_MinimumMetabolicEffForMutatedGen>Minimum metabolic efficiency allowed when generating mutation</Buggy_MP_Option_MinimumMetabolicEffForMutatedGen>
 	<Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip>The minimum metabolic efficiency allowed used by ONLY this mod. Default is -5</Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip>
+	<Buggy_MP_Option_ChanceWithCarcinomaGrowing>The chance to develop random mutation with a growing carcinoma every 5000 ticks (60k ticks/day)</Buggy_MP_Option_ChanceWithCarcinomaGrowing>
+	<Buggy_MP_Option_ChanceWithCarcinomaGrowing_Tooltip>These muations do NOT obey minimum metabolic efficiency and are always xenogene. Default: 5%</Buggy_MP_Option_ChanceWithCarcinomaGrowing_Tooltip>
+	<Buggy_MP_Option_LetterLabel>Mutation ({0})</Buggy_MP_Option_LetterLabel>
+	<Buggy_MP_Option_LetterText>{0}'s genes have mutated due to a growing carcinoma. {1} is now in his/her xenogenes.</Buggy_MP_Option_LetterText>
 	<Buggy_MP_Option_Debug>Log debug messages</Buggy_MP_Option_Debug>
 </LanguageData>

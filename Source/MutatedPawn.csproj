@@ -53,10 +53,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarcinomaPatch.cs" />
+    <Compile Include="DrawGeneBasicsPatch.cs" />
     <Compile Include="Listing_Settings.cs" />
     <Compile Include="MutatedPawnMod.cs" />
     <Compile Include="MutatedPawnPatcher.cs" />
-    <Compile Include="Patch.cs" />
+    <Compile Include="GenerateGenesPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

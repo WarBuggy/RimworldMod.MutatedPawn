@@ -14,6 +14,7 @@ namespace Buggy.RimworldMod.MutatedPawn
         public bool allowedMutatedXenoGene;
         public bool allowedMutatedArchiteGenes;
         public int minimumMetabolicEffAllowed;
+        public int chanceWhenCarcinomaGrowing;
 
         public override void ExposeData()
         {
@@ -27,6 +28,7 @@ namespace Buggy.RimworldMod.MutatedPawn
             Scribe_Values.Look(ref allowedMutatedXenoGene, "allowedMutatedXenoGene", false, false);
             Scribe_Values.Look(ref minimumMetabolicEffAllowed, "minimumMetabolicEffAllowed", -5, false);
             Scribe_Values.Look(ref allowedMutatedArchiteGenes, "allowedMutatedArchiteGenes", false, false);
+            Scribe_Values.Look(ref chanceWhenCarcinomaGrowing, "chanceWhenCarcinomaGrowing", 5, false);
 
             base.ExposeData();
         }
