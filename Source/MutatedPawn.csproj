@@ -54,7 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarcinomaPatch.cs" />
-    <Compile Include="DrawGeneBasicsPatch.cs" />
+    <Compile Include="MutatedPawnComp.cs" />
+    <Compile Include="GeneUIUtilityPatch.cs" />
     <Compile Include="Listing_Settings.cs" />
     <Compile Include="MutatedPawnMod.cs" />
     <Compile Include="MutatedPawnPatcher.cs" />

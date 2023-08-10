@@ -47,10 +47,12 @@ namespace Buggy.RimworldMod.MutatedPawn
                 return;
             }
             GeneSet chosenGenes = CreateGeneSetFromPawn(pawn);
+            List<string> mutations = new List<string>();
             foreach ((var maxMutatedGenesAllowed, var percentChanceToHaveAMutatedGene) in chanceDictionary)
             {
-                var randomIndexes = GenerateRandomIndexes(allGenes.Count, maxMutatedGenesAllowed, debug);
-                foreach (var index in randomIndexes)
+                List<GeneDef> toBeRemovedFromAllGenes = new List<GeneDef>();
+                var randomIndices = GenerateRandomIndices(allGenes.Count, maxMutatedGenesAllowed, debug);
+                foreach (var index in randomIndices)
                 {
                     if (!CanHaveMutatedGene(percentChanceToHaveAMutatedGene, debug))
                     {
@@ -69,6 +71,8 @@ namespace Buggy.RimworldMod.MutatedPawn
                     }
                     pawn.genes.AddGene(geneDef, IsXenoGene(allowedMutatedXenoGene, debug));
                     chosenGenes.AddGene(geneDef);
+                    mutations.Add(geneDef.defName);
+                    toBeRemovedFromAllGenes.Add(geneDef);
                     if (debug)
                     {
                         Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} have gene {geneDef.defName}, ({geneDef.biostatMet}) added, current metabolic efficiency {geneset.MetabolismTotal}.");
@@ -82,11 +86,32 @@ namespace Buggy.RimworldMod.MutatedPawn
                         break;
                     }
                 }
+                allGenes.RemoveAll(x => toBeRemovedFromAllGenes.Contains(x));
             }
+            if (mutations.Count < 1)
+            {
+                if (debug)
+                {
+                    Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} does not have any mutation.");
+                }
+                return;
+            }
+            HandleMutatedPawnComp(pawn, mutations, debug);
             if (debug)
             {
-                Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} has a metabolic efficiency of {chosenGenes.MetabolismTotal} and mutated genes: {string.Join(",", chosenGenes.GenesListForReading)}.");
+                Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} has a metabolic efficiency of {chosenGenes.MetabolismTotal} and mutated genes: {string.Join(",", mutations)}.");
             }
+        }
+
+        private static void HandleMutatedPawnComp(Pawn pawn, List<string> mutations, bool debug)
+        {
+            var mutatedPawnComp = pawn.GetComp<MutatedPawnComp>();
+            if (mutatedPawnComp == null && debug)
+            {
+                Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} of def name {pawn.def.defName} has no mutated comp.");
+                return;
+            }
+            mutatedPawnComp.MutationString = string.Join(",", mutations);
         }
 
         private static void RemoveUnwantedGenes(List<GeneDef> allGenes, Pawn pawn,
@@ -108,7 +133,7 @@ namespace Buggy.RimworldMod.MutatedPawn
             }
         }
 
-        private static List<int> GenerateRandomIndexes(int geneListLength, int maxMutatedGenesAllowed, bool debug)
+        private static List<int> GenerateRandomIndices(int geneListLength, int maxMutatedGenesAllowed, bool debug)
         {
             var results = new List<int>();
 

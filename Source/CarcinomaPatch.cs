@@ -12,7 +12,7 @@ namespace Buggy.RimworldMod.MutatedPawn
     [HarmonyPatch(typeof(HediffComp_GrowthMode), "CompPostTick")]
     public class CarcinomaPatch
     {
-        private static int CheckInternal = 5000;
+        private static readonly int CheckInternal = 5000;
 
         public static void Prefix(HediffComp_GrowthMode __instance, out CarcinomaPatchData __state)
         {
@@ -30,6 +30,7 @@ namespace Buggy.RimworldMod.MutatedPawn
                 return;
             }
             var chanceWhenCarcinomaGrowing = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().chanceWhenCarcinomaGrowing;
+            var allowedMutatedArchiteGenes = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<Settings>().allowedMutatedArchiteGenes;
             if (chanceWhenCarcinomaGrowing <= 0)
             {
                 return;
@@ -45,13 +46,21 @@ namespace Buggy.RimworldMod.MutatedPawn
                 return;
             }
             List<GeneDef> availableGenes = DefDatabase<GeneDef>.AllDefs.ToList();
-            availableGenes.RemoveAll(x => x.biostatArc > 0);
+            if (!allowedMutatedArchiteGenes)
+            {
+                availableGenes.RemoveAll(x => x.biostatArc > 0);
+            }
             var pawnGenes = __state.Pawn.genes.GenesListForReading.Select(x => x.def).ToList();
             availableGenes.RemoveAll(x => pawnGenes.Contains(x));
             float floatResult = UnityEngine.Random.Range(0, availableGenes.Count);
             var index = (int)Math.Floor(floatResult);
             var chosenGene = availableGenes[index];
             __state.Pawn.genes.AddGene(chosenGene, true);
+            var mutatedPawnComp = __state.Pawn.GetComp<MutatedPawnComp>();
+            if (mutatedPawnComp != null)
+            {
+                mutatedPawnComp.AddMutation(chosenGene.defName);
+            }
             SendLetter(__state.Pawn, chosenGene.LabelShortAdj);
         }
 
