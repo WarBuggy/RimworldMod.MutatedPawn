@@ -51,6 +51,10 @@ It would be great to receive feedback, suggestions or pointers on how to improve
 Cheers!
 
 Version history
+[b]v0.7[/b]
+[list]
+[*]Slightly improve the process of choosing random genes.
+[/list]
 [b]v0.6[/b]
 [list]
 [*]Allow mutation for a pawn with moderate (or worse) toxic buildup.

@@ -134,23 +134,23 @@ namespace Buggy.RimworldMod.MutatedPawn
 
         private static List<int> GenerateRandomIndices(int geneListLength, int maxMutatedGenesAllowed, bool debug)
         {
-            var results = new List<int>();
+            List<int> possibleIndices = new List<int>();
+            for (int i = 0; i < geneListLength; i++)
+            {
+                possibleIndices.Add(i);
+            }
             if (geneListLength <= maxMutatedGenesAllowed)
             {
-                for (int i = 0; i < geneListLength; i++)
-                {
-                    results.Add(i);
-                }
-                return results;
+                possibleIndices.Shuffle();
+                return possibleIndices;
             }
+            var results = new List<int>();
             while (results.Count < maxMutatedGenesAllowed)
             {
-                float floatResult = UnityEngine.Random.Range(0, geneListLength);
-                var intResult = (int)Math.Floor(floatResult);
-                if (!results.Contains(intResult))
-                {
-                    results.Add(intResult);
-                }
+                float floatIndex = UnityEngine.Random.Range(0, possibleIndices.Count);
+                var index = (int)Math.Floor(floatIndex);
+                results.Add(possibleIndices[index]);
+                possibleIndices.RemoveAt(index);
             }
             if (debug)
             {
