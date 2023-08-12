@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-	<Buggy_MP_Mod_Name>Mutated Pawn</Buggy_MP_Mod_Name>
 	<Buggy_MP_Option_LoreFriendly>Lore friendly options</Buggy_MP_Option_LoreFriendly>
 	<Buggy_MP_Option_1stMutationChance>Configure the first group of mutations</Buggy_MP_Option_1stMutationChance>
 	<Buggy_MP_Option_2ndMutationChance>Configure the second group of mutations</Buggy_MP_Option_2ndMutationChance>
 	<Buggy_MP_Option_3rdMutationChance>Configure the third group of mutations</Buggy_MP_Option_3rdMutationChance>
-	<Buggy_MP_Option_MaxNumberOfMutation>Max number of mutations</Buggy_MP_Option_MaxNumberOfMutation>
-	<Buggy_MP_Option_ChanceToHaveAMutatedGene>Chance to have a mutated gene</Buggy_MP_Option_ChanceToHaveAMutatedGene>
-	<Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_1stGroup_Tooltip>Default: 1</Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_1stGroup_Tooltip>
+	<Buggy_MP_Option_MaxNumberOfMutation_1stGroup>1st group's max number of mutations</Buggy_MP_Option_MaxNumberOfMutation_1stGroup>
+	<Buggy_MP_Option_MaxNumberOfMutation_1stGroup_Tooltip>Default: 1</Buggy_MP_Option_MaxNumberOfMutation_1stGroup_Tooltip>
+	<Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup>1st group's chance to have a mutated gene</Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup>
 	<Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup_Tooltip>Default: 33%</Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup_Tooltip>
-	<Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_2ndGroup_Tooltip>Default: 2</Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_2ndGroup_Tooltip>
+	<Buggy_MP_Option_MaxNumberOfMutation_2ndGroup>2nd group's max number of mutations</Buggy_MP_Option_MaxNumberOfMutation_2ndGroup>
+	<Buggy_MP_Option_MaxNumberOfMutation_2ndGroup_Tooltip>Default: 2</Buggy_MP_Option_MaxNumberOfMutation_2ndGroup_Tooltip>
+	<Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup>2nd group's chance to have a mutated gene</Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup>
 	<Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup_Tooltip>Default: 15%</Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup_Tooltip>
-	<Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_3rdGroup_Tooltip>Default: 1</Buggy_MP_Buggy_MP_Option_MaxNumberOfMutation_3rdGroup_Tooltip>
+	<Buggy_MP_Option_MaxNumberOfMutation_3rdGroup>3rd group's max number of mutations</Buggy_MP_Option_MaxNumberOfMutation_3rdGroup>
+	<Buggy_MP_Option_MaxNumberOfMutation_3rdGroup_Tooltip>Default: 1</Buggy_MP_Option_MaxNumberOfMutation_3rdGroup_Tooltip>
+	<Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup>3rd group's chance to have a mutated gene</Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup>
 	<Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup_Tooltip>Default: 5%</Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup_Tooltip>
 	<Buggy_MP_Option_NoneLoreFriendly>Non-lore friendly options</Buggy_MP_Option_NoneLoreFriendly>
 	<Buggy_MP_Option_AllowedMutatedXenoGene>Mutated genes can be xenogene</Buggy_MP_Option_AllowedMutatedXenoGene>
-	<Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip>Default: Mutated genes can only be endogenes</Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip>
+	<Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip>Default: Mutated genes can only be endogenes.</Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip>
 	<Buggy_MP_Option_AllowedMutatedArchiteGenes>Mutated genes can be archite genes</Buggy_MP_Option_AllowedMutatedArchiteGenes>
-	<Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip>Defaul: Mutated genes can not be archite genes</Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip>
+	<Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip>Defaul: Mutated genes can not be archite genes.</Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip>
 	<Buggy_MP_Option_MinimumMetabolicEffForMutatedGen>Minimum metabolic efficiency allowed when generating mutation</Buggy_MP_Option_MinimumMetabolicEffForMutatedGen>
-	<Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip>The minimum metabolic efficiency allowed used by ONLY this mod. Default is -5</Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip>
-	<Buggy_MP_Option_ChanceWithCarcinomaGrowing>The chance to develop random mutation with a growing carcinoma every 5000 ticks (60k ticks/day)</Buggy_MP_Option_ChanceWithCarcinomaGrowing>
-	<Buggy_MP_Option_ChanceWithCarcinomaGrowing_Tooltip>These muations do NOT obey minimum metabolic efficiency and are always xenogene. Default: 5%</Buggy_MP_Option_ChanceWithCarcinomaGrowing_Tooltip>
+	<Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip>The minimum metabolic efficiency allowed used by ONLY this mod.</Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip>
+	<Buggy_MP_Option_ChanceWithGrowingCarcinoma>The chance to develop random mutation with a growing carcinoma every 5000 ticks</Buggy_MP_Option_ChanceWithGrowingCarcinoma>
+	<Buggy_MP_Option_ChanceWithGrowingCarcinoma_Tooltip>These muations do NOT obey minimum metabolic efficiency and are always xenogene. Check every 5k ticks. A day has 60k ticks.</Buggy_MP_Option_ChanceWithGrowingCarcinoma_Tooltip>
+	<Buggy_MP_Option_ChanceWithModerateToxicBuildup>The chance to develop random mutation with a moderate (or worse) toxic buildup.</Buggy_MP_Option_ChanceWithModerateToxicBuildup>
+	<Buggy_MP_Option_ChanceWithModerateToxicBuildup_Tooltip>These muations do NOT obey minimum metabolic efficiency and are always xenogene. Check every 5k ticks. A day has 60k ticks.</Buggy_MP_Option_ChanceWithModerateToxicBuildup_Tooltip>
 	<Buggy_MP_Option_LetterLabel>Mutation ({0})</Buggy_MP_Option_LetterLabel>
-	<Buggy_MP_Option_LetterText>{0}'s genes have mutated due to a growing carcinoma. {1} is now in his/her xenogenes.</Buggy_MP_Option_LetterText>
+	<Buggy_MP_Option_LetterText>{0}'s genes have mutated due to {1}. {2} is now in his/her xenogenes.</Buggy_MP_Option_LetterText>
+	<Buggy_MP_Option_LetterText_Source_GrowingCarcinoma>a growing carcinoma</Buggy_MP_Option_LetterText_Source_GrowingCarcinoma>
+	<Buggy_MP_Option_LetterText_Source_ToxicBuildup>a harmful amount of toxic buildup</Buggy_MP_Option_LetterText_Source_ToxicBuildup>
+	<Buggy_MP_Option_WhiteList>White list genes (use defName or LabelShortAdj)</Buggy_MP_Option_WhiteList>
+	<Buggy_MP_Option_WhiteList_Tooltip>Only genes with these names can be chosen for random mutations. Leave empty to allow all. Separate by comma. Overriden by black list.</Buggy_MP_Option_WhiteList_Tooltip>
+	<Buggy_MP_Option_BlackList>Black list genes (use defName or LabelShortAdj)</Buggy_MP_Option_BlackList>
+	<Buggy_MP_Option_BlackList_Tooltip>Genes with these names cannot be chosen for random mutations. Separate by comma. Override white list</Buggy_MP_Option_BlackList_Tooltip>
+	<Buggy_MP_Option_ShowAllGeneDefName>Show all found gene's defName on debug console</Buggy_MP_Option_ShowAllGeneDefName>
+	<Buggy_MP_Option_ShowAllGeneDefName_Tooltip>Good to find out a gene defName for black list or white list. Enable dev mode to see the debug console. Show every time mod settings changed. </Buggy_MP_Option_ShowAllGeneDefName_Tooltip>
 	<Buggy_MP_Option_Debug>Log debug messages</Buggy_MP_Option_Debug>
 </LanguageData>

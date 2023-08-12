@@ -23,7 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\1.4\Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -37,6 +37,10 @@
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HugsLib">
+      <HintPath>..\..\..\..\..\..\..\..\Code\RimworldMod\HugsLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -53,15 +57,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarcinomaPatch.cs" />
     <Compile Include="MutatedPawnComp.cs" />
     <Compile Include="GeneUIUtilityPatch.cs" />
-    <Compile Include="Listing_Settings.cs" />
     <Compile Include="MutatedPawnMod.cs" />
-    <Compile Include="MutatedPawnPatcher.cs" />
     <Compile Include="GenerateGenesPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="ModSettings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
