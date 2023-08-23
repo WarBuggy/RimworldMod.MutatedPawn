@@ -36,6 +36,10 @@ namespace Buggy.RimworldMod.MutatedPawn
         public override void CompTick()
         {
             Pawn pawn = (Pawn)parent;
+            if (pawn.InCryptosleep)
+            {
+                return;
+            }
             if (!pawn.IsHashIntervalTick(CheckInternal))
             {
                 return;

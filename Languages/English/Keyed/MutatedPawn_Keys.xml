@@ -35,7 +35,7 @@
 	<Buggy_MP_Option_WhiteList_Tooltip>Only genes with these names can be chosen for random mutations. Leave empty to allow all. Separate by comma. Overriden by black list.</Buggy_MP_Option_WhiteList_Tooltip>
 	<Buggy_MP_Option_BlackList>Black list genes (use defName or LabelShortAdj)</Buggy_MP_Option_BlackList>
 	<Buggy_MP_Option_BlackList_Tooltip>Genes with these names cannot be chosen for random mutations. Separate by comma. Override white list</Buggy_MP_Option_BlackList_Tooltip>
-	<Buggy_MP_Option_ShowAllGeneDefName>Show all found gene's defName on debug console</Buggy_MP_Option_ShowAllGeneDefName>
-	<Buggy_MP_Option_ShowAllGeneDefName_Tooltip>Good to find out a gene defName for black list or white list. Enable dev mode to see the debug console. Show every time mod settings changed. </Buggy_MP_Option_ShowAllGeneDefName_Tooltip>
+	<Buggy_MP_Option_ShowAllGeneDefName>Show all found gene's defName on debug console. The format is "defName - LabelShortAdj"</Buggy_MP_Option_ShowAllGeneDefName>
+	<Buggy_MP_Option_ShowAllGeneDefName_Tooltip>Good for finding out a gene defName for black list or white list. Enable dev mode to see the debug console. Show every time mod settings changed. </Buggy_MP_Option_ShowAllGeneDefName_Tooltip>
 	<Buggy_MP_Option_Debug>Log debug messages</Buggy_MP_Option_Debug>
 </LanguageData>
