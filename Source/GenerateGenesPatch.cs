@@ -105,9 +105,12 @@ namespace Buggy.RimworldMod.MutatedPawn
         private static void HandleMutatedPawnComp(Pawn pawn, List<string> mutations, bool debug)
         {
             var mutatedPawnComp = pawn.GetComp<MutatedPawnComp>();
-            if (mutatedPawnComp == null && debug)
+            if (mutatedPawnComp == null)
             {
-                Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} of def name {pawn.def.defName} has no mutated comp.");
+                if (debug)
+                {
+                    Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort} of def name {pawn.def.defName} has no mutated comp.");
+                }
                 return;
             }
             mutatedPawnComp.MutationString = string.Join(",", mutations);
