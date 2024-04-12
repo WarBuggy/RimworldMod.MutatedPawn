@@ -5,6 +5,7 @@
 	<author>Buggy</author>
 	<supportedVersions>
 		<li>1.4</li>
+		<li>1.5</li>
 	</supportedVersions>	
 	<modDependencies>
 		<li>
@@ -48,9 +49,16 @@ Billed Deep Drill https://steamcommunity.com/sharedfiles/filedetails/?id=2593197
 
 It would be great to receive feedback, suggestions or pointers on how to improve. Hope these mods help!
 
+Github: https://github.com/WarBuggy/RimworldMod.MutatedPawn.git
+
 Cheers!
 
 Version history
+[b]v0.9[/b]
+[list]
+[*]Add compatibility for 1.5. Happy horror hunting!
+[*]Add github link.
+[/list]
 [b]v0.81[/b]
 [list]
 [*]Handle null comp properly. Many thanks to Taemaly_UA!
