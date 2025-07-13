@@ -89,9 +89,17 @@ namespace Buggy.RimworldMod.MutatedPawn
                 "Buggy_MP_Option_ChanceWithModerateToxicBuildup_Tooltip".Translate(), 5,
                 Validators.IntRangeValidator(0, 100));
 
+            ModSettings.whiteListWildcardString = Settings.GetHandle("whiteListWildcardString",
+                "Buggy_MP_Option_WhiteListWildcard".Translate(),
+                "Buggy_MP_Option_WhiteListWildcard_Tooltip".Translate(), "");
+
             ModSettings.whiteListString = Settings.GetHandle("whiteListString",
                 "Buggy_MP_Option_WhiteList".Translate(),
                 "Buggy_MP_Option_WhiteList_Tooltip".Translate(), "");
+
+            ModSettings.blackListWildcardString = Settings.GetHandle("blackListWildcardString",
+                "Buggy_MP_Option_BlackListWildcard".Translate(),
+                "Buggy_MP_Option_BlackListWildcard_Tooltip".Translate(), "");
 
             ModSettings.blackListString = Settings.GetHandle("blackListString",
                 "Buggy_MP_Option_BlackList".Translate(),
@@ -156,6 +164,16 @@ namespace Buggy.RimworldMod.MutatedPawn
             {
                 Log.Message($"MutatedPawn: {allAvailableGenes.Count} genes found.");
             }
+
+            if (string.IsNullOrEmpty(ModSettings.whiteListWildcardString.Value.Trim()))
+            {
+                ModSettings.allGenes = allAvailableGenes;
+                if (ModSettings.debug)
+                {
+                    Log.Message($"MutatedPawn: No white list wildcard found. All genes are allowed.");
+                }
+            }
+            // TODO: continue while list wildcard and black list wildcard
             if (string.IsNullOrEmpty(ModSettings.whiteListString.Value.Trim()))
             {
                 ModSettings.allGenes = allAvailableGenes;

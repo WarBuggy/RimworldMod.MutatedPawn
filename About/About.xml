@@ -6,25 +6,26 @@
 	<supportedVersions>
 		<li>1.4</li>
 		<li>1.5</li>
-	</supportedVersions>	
+		<li>1.6</li>
+	</supportedVersions>
 	<modDependencies>
 		<li>
-        	<packageId>brrainz.harmony</packageId>
-            <displayName>Harmony</displayName>
-            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
-            <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
-        </li>
-		<li>
-            <packageId>UnlimitedHugs.HugsLib</packageId>
-            <displayName>HugsLib</displayName>
-            <downloadUrl>https://github.com/UnlimitedHugs/RimworldHugsLib/releases/latest</downloadUrl>
-            <steamWorkshopUrl>steam://url/CommunityFilePage/818773962</steamWorkshopUrl>
-        </li>
-		<li>
-		    <packageId>ludeon.rimworld.biotech</packageId>
-		    <displayName>Biotech</displayName>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
 		</li>
-	</modDependencies>   
+		<li>
+			<packageId>UnlimitedHugs.HugsLib</packageId>
+			<displayName>HugsLib</displayName>
+			<downloadUrl>https://github.com/UnlimitedHugs/RimworldHugsLib/releases/latest</downloadUrl>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/818773962</steamWorkshopUrl>
+		</li>
+		<li>
+			<packageId>ludeon.rimworld.biotech</packageId>
+			<displayName>Biotech</displayName>
+		</li>
+	</modDependencies>
 	<description>Allow any pawn a chance to have random genes with the following configurations:
 [list]
 [*]3 different chances to have mutations, each with its own max mutation number and chance.
@@ -54,6 +55,10 @@ Github: https://github.com/WarBuggy/RimworldMod.MutatedPawn.git
 Cheers!
 
 Version history
+[b]v0.9.1[/b]
+[list]
+[*]Add compatibility for 1.6.
+[/list]
 [b]v0.9[/b]
 [list]
 [*]Add compatibility for 1.5. Happy horror hunting!

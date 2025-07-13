@@ -17,7 +17,9 @@ namespace Buggy.RimworldMod.MutatedPawn
         public static SettingHandle<int> minimumMetabolicEffAllowed;
         public static SettingHandle<int> chanceWithGrowingCarcinoma;
         public static SettingHandle<int> chanceWithModerateToxicBuildup;
+        public static SettingHandle<string> whiteListWildcardString;
         public static SettingHandle<string> whiteListString;
+        public static SettingHandle<string> blackListWildcardString;
         public static SettingHandle<string> blackListString;
         public static SettingHandle<bool> showAllGeneDefNameOnLog;
         public static SettingHandle<bool> debug;

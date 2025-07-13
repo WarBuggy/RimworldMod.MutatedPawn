@@ -31,10 +31,14 @@
 	<Buggy_MP_Option_LetterText>{0}'s genes have mutated due to {1}. {2} is now in his/her xenogenes.</Buggy_MP_Option_LetterText>
 	<Buggy_MP_Option_LetterText_Source_GrowingCarcinoma>a growing carcinoma</Buggy_MP_Option_LetterText_Source_GrowingCarcinoma>
 	<Buggy_MP_Option_LetterText_Source_ToxicBuildup>a harmful amount of toxic buildup</Buggy_MP_Option_LetterText_Source_ToxicBuildup>
+	<Buggy_MP_Option_WhiteListWildcard>Wildcard white list genes (use defName or LabelShortAdj)</Buggy_MP_Option_WhiteListWildcard>
+	<Buggy_MP_Option_WhiteListWildcard_Tooltip>Only genes names which include these strings can be chosen for random mutations. Leave empty to allow all. Separate by comma. Overriden by black list.</Buggy_MP_Option_WhiteListWildcard_Tooltip>
 	<Buggy_MP_Option_WhiteList>White list genes (use defName or LabelShortAdj)</Buggy_MP_Option_WhiteList>
 	<Buggy_MP_Option_WhiteList_Tooltip>Only genes with these names can be chosen for random mutations. Leave empty to allow all. Separate by comma. Overriden by black list.</Buggy_MP_Option_WhiteList_Tooltip>
+	<Buggy_MP_Option_BlackListWildcard>Wildcard black list genes (use defName or LabelShortAdj)</Buggy_MP_Option_BlackListWildcard>
+	<Buggy_MP_Option_BlackListWildcard_Tooltip>Genes with names which include these strings cannot be chosen for random mutations. Separate by comma. Override white list.</Buggy_MP_Option_BlackListWildcard_Tooltip>
 	<Buggy_MP_Option_BlackList>Black list genes (use defName or LabelShortAdj)</Buggy_MP_Option_BlackList>
-	<Buggy_MP_Option_BlackList_Tooltip>Genes with these names cannot be chosen for random mutations. Separate by comma. Override white list</Buggy_MP_Option_BlackList_Tooltip>
+	<Buggy_MP_Option_BlackList_Tooltip>Genes with these names cannot be chosen for random mutations. Separate by comma. Override white list.</Buggy_MP_Option_BlackList_Tooltip>
 	<Buggy_MP_Option_ShowAllGeneDefName>Show all found gene's defName on debug console. The format is "defName - LabelShortAdj"</Buggy_MP_Option_ShowAllGeneDefName>
 	<Buggy_MP_Option_ShowAllGeneDefName_Tooltip>Good for finding out a gene defName for black list or white list. Enable dev mode to see the debug console. Show every time mod settings changed. </Buggy_MP_Option_ShowAllGeneDefName_Tooltip>
 	<Buggy_MP_Option_Debug>Log debug messages</Buggy_MP_Option_Debug>
