@@ -1,217 +1,186 @@
-﻿using Verse;
-using HarmonyLib;
-using System.Reflection;
-using HugsLib;
-using HugsLib.Settings;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime;
+using UnityEngine;
+using UnityEngine.Windows;
+using Verse;
 
 namespace Buggy.RimworldMod.MutatedPawn
 {
-    [EarlyInit]
-    public class MutatedPawnMod : ModBase
+    public class MutatedPawnMod : Mod
     {
-        public override string ModIdentifier => "MutatedPawn";
-        protected override bool HarmonyAutoPatch => false;
+        private readonly MutatedPawnSettings MutatedPawnSettings;
+        private Vector2 scrollPosition = Vector2.zero; // Start at top-left
+        private readonly string listSeparator = "|-+|";
+        private bool initialized = false;
 
-        public MutatedPawnMod()
+        public MutatedPawnMod(ModContentPack content)
+           : base(content)
         {
+            MutatedPawnSettings = base.GetSettings<MutatedPawnSettings>();
+            LongEventHandler.QueueLongEvent(() =>
+            {
+                Initialize(); 
+            }, "MutatedPawn_Initialize", false, null);
         }
 
-        public override void EarlyInitialize()
+        private void Initialize()
         {
-            base.EarlyInitialize();
-            var harmony = new Harmony("Buggy.RimworldMod.MutatedPawn");
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
+            if (initialized) return;
+            initialized = true;
+
+            MutatedPawnSettings.allGenes = ConvertStringToGeneDefList(MutatedPawnSettings.allGenesInString);
+            MutatedPawnSettings.disableViolenceGenes = ConvertStringToGeneDefList(MutatedPawnSettings.disableViolenceGenesInString);
         }
 
-        public override void DefsLoaded()
+        public override void DoSettingsWindowContents(Rect inRect)
         {
-            base.DefsLoaded();
-            ReadSettings();
+            float viewHeight = 1200f;
+            float scrollbarWidth = 16f;
+            Rect viewRect = new Rect(0f, 0f, inRect.width - scrollbarWidth, viewHeight);
+            Widgets.BeginScrollView(inRect, ref scrollPosition, viewRect);
+            Listing_Standard listingStandard = new Listing_Standard();
+            listingStandard.Begin(viewRect);
+
+            listingStandard.Label("Buggy_MP_Option_LoreFriendly".Translate());
+            listingStandard.Gap();
+
+            listingStandard.Label("Buggy_MP_Option_1stMutationChance".Translate());
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_MaxNumberOfMutation_1stGroup".Translate()}: {MutatedPawnSettings.maxMutatedGenesAllowed1stChance}", -1, "Buggy_MP_Option_MaxNumberOfMutation_1stGroup_Tooltip".Translate());
+            MutatedPawnSettings.maxMutatedGenesAllowed1stChance = (int)listingStandard.Slider(MutatedPawnSettings.maxMutatedGenesAllowed1stChance, 0f, 10f);
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup".Translate()}: {MutatedPawnSettings.percentChanceToHaveAMutatedGene1stChance}%", -1, "Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup_Tooltip".Translate());
+            MutatedPawnSettings.percentChanceToHaveAMutatedGene1stChance = (int)listingStandard.Slider(MutatedPawnSettings.percentChanceToHaveAMutatedGene1stChance, 0f, 100f);
+            listingStandard.Gap();
+
+            listingStandard.Label("Buggy_MP_Option_2ndMutationChance".Translate());
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_MaxNumberOfMutation_2ndGroup".Translate()}: {MutatedPawnSettings.maxMutatedGenesAllowed2ndChance}", -1, "Buggy_MP_Option_MaxNumberOfMutation_2ndGroup_Tooltip".Translate());
+            MutatedPawnSettings.maxMutatedGenesAllowed2ndChance = (int)listingStandard.Slider(MutatedPawnSettings.maxMutatedGenesAllowed2ndChance, 0f, 10f);
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup".Translate()}: {MutatedPawnSettings.percentChanceToHaveAMutatedGene2ndChance}%", -1, "Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup_Tooltip".Translate());
+            MutatedPawnSettings.percentChanceToHaveAMutatedGene2ndChance = (int)listingStandard.Slider(MutatedPawnSettings.percentChanceToHaveAMutatedGene2ndChance, 0f, 100f);
+            listingStandard.Gap();
+
+            listingStandard.Label("Buggy_MP_Option_3rdMutationChance".Translate());
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_MaxNumberOfMutation_3rdGroup".Translate()}: {MutatedPawnSettings.maxMutatedGenesAllowed3rdChance}", -1, "Buggy_MP_Option_MaxNumberOfMutation_3rdGroup_Tooltip".Translate());
+            MutatedPawnSettings.maxMutatedGenesAllowed3rdChance = (int)listingStandard.Slider(MutatedPawnSettings.maxMutatedGenesAllowed3rdChance, 0f, 10f);
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup".Translate()}: {MutatedPawnSettings.percentChanceToHaveAMutatedGene3rdChance}%", -1, "Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup_Tooltip".Translate());
+            MutatedPawnSettings.percentChanceToHaveAMutatedGene3rdChance = (int)listingStandard.Slider(MutatedPawnSettings.percentChanceToHaveAMutatedGene3rdChance, 0f, 100f);
+            listingStandard.Gap();
+
+            listingStandard.GapLine();
+            listingStandard.Label("Buggy_MP_Option_NoneLoreFriendly".Translate());
+            listingStandard.Gap();
+
+            listingStandard.CheckboxLabeled("Buggy_MP_Option_AllowedMutatedXenoGene".Translate(), ref MutatedPawnSettings.allowedMutatedXenoGene, "Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip".Translate());
+            listingStandard.CheckboxLabeled("Buggy_MP_Option_AllowedMutatedArchiteGenes".Translate(), ref MutatedPawnSettings.allowedMutatedArchiteGenes, "Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip".Translate());
+
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_MinimumMetabolicEffForMutatedGen".Translate()}: {MutatedPawnSettings.minimumMetabolicEffAllowed}", -1, "Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip".Translate());
+            MutatedPawnSettings.minimumMetabolicEffAllowed = (int)listingStandard.Slider(MutatedPawnSettings.minimumMetabolicEffAllowed, -50f, 50f);
+
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_ChanceWithGrowingCarcinoma".Translate()}: {MutatedPawnSettings.chanceWithGrowingCarcinoma}%", -1, "Buggy_MP_Option_ChanceWithGrowingCarcinoma_Tooltip".Translate());
+            MutatedPawnSettings.chanceWithGrowingCarcinoma = (int)listingStandard.Slider(MutatedPawnSettings.chanceWithGrowingCarcinoma, 0f, 100f);
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_TickPerGrowingCarcinomaCheck".Translate()}: {MutatedPawnSettings.tickPerGrowingCarcinomaCheck}", -1, "Buggy_MP_Option_TickPerGrowingCarcinomaCheck_Tooltip".Translate());
+            MutatedPawnSettings.tickPerGrowingCarcinomaCheck = (int)listingStandard.Slider(MutatedPawnSettings.tickPerGrowingCarcinomaCheck, 1000f, 100000f);
+
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_ChanceWithModerateToxicBuildup".Translate()}: {MutatedPawnSettings.chanceWithModerateToxicBuildup}%", -1, "Buggy_MP_Option_ChanceWithModerateToxicBuildup_Tooltip".Translate());
+            MutatedPawnSettings.chanceWithModerateToxicBuildup = (int)listingStandard.Slider(MutatedPawnSettings.chanceWithModerateToxicBuildup, 0f, 100f);
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_TickPerToxicBuildupCheck".Translate()}: {MutatedPawnSettings.tickPerToxicBuildupCheck}", -1, "Buggy_MP_Option_TickPerToxicBuildupCheck_Tooltip".Translate());
+            MutatedPawnSettings.tickPerToxicBuildupCheck = (int)listingStandard.Slider(MutatedPawnSettings.tickPerToxicBuildupCheck, 1000f, 100000f);
+
+            listingStandard.Label("Buggy_MP_Option_BlackList".Translate(), -1, "Buggy_MP_Option_BlackList_Tooltip".Translate());
+            MutatedPawnSettings.blackListString = listingStandard.TextEntry(MutatedPawnSettings.blackListString, 3);
+            listingStandard.Label("Buggy_MP_Option_WhiteList".Translate(), -1, "Buggy_MP_Option_WhiteList_Tooltip".Translate());
+            MutatedPawnSettings.whiteListString = listingStandard.TextEntry(MutatedPawnSettings.whiteListString, 3);
+
+            Rect buttonShowAllGeneRect = listingStandard.GetRect(25f);
+            if (Widgets.ButtonText(buttonShowAllGeneRect, "Buggy_MP_Option_ShowAllGeneDefName".Translate()))
+            {
+                ShowAllAvailableGenes();
+            }
+            TooltipHandler.TipRegion(buttonShowAllGeneRect, "Buggy_MP_Option_ShowAllGeneDefName_Tooltip".Translate());
+            listingStandard.Gap(10f);
+
+            listingStandard.Gap();
+            listingStandard.CheckboxLabeled("Buggy_MP_Option_Debug".Translate(), ref MutatedPawnSettings.debug);
+
+            listingStandard.End();
+            Widgets.EndScrollView();
         }
 
-        public override void SettingsChanged()
+        public override string SettingsCategory()
         {
-            base.SettingsChanged();
-            ReadSettings();
+            return "Buggy_MP_Option_Mod_Name".Translate();
         }
 
-        private void ReadSettings()
+        public override void WriteSettings()
         {
-            ModSettings.maxMutatedGenesAllowed1stChance = Settings.GetHandle("maxMutatedGenesAllowed1stChance",
-                "Buggy_MP_Option_MaxNumberOfMutation_1stGroup".Translate(),
-                "Buggy_MP_Option_MaxNumberOfMutation_1stGroup_Tooltip".Translate(), 1,
-                 Validators.IntRangeValidator(0, 10));
-            ModSettings.percentChanceToHaveAMutatedGene1stChance = Settings.GetHandle("percentChanceToHaveAMutatedGene1stChance",
-                "Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup".Translate(),
-                $"Buggy_MP_Option_ChanceToHaveAMutatedGene_1stGroup_Tooltip".Translate(), 33,
-                Validators.IntRangeValidator(0, 100));
-
-            ModSettings.maxMutatedGenesAllowed2ndChance = Settings.GetHandle("maxMutatedGenesAllowed2ndChance",
-                "Buggy_MP_Option_MaxNumberOfMutation_2ndGroup".Translate(),
-                "Buggy_MP_Option_MaxNumberOfMutation_2ndGroup_Tooltip".Translate(), 2,
-                Validators.IntRangeValidator(0, 10));
-            ModSettings.percentChanceToHaveAMutatedGene2ndChance = Settings.GetHandle("percentChanceToHaveAMutatedGene2ndChance",
-                "Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup".Translate(),
-                "Buggy_MP_Option_ChanceToHaveAMutatedGene_2ndGroup_Tooltip".Translate(), 15,
-                Validators.IntRangeValidator(0, 100));
-
-            ModSettings.maxMutatedGenesAllowed3rdChance = Settings.GetHandle("maxMutatedGenesAllowed3rdChance",
-                "Buggy_MP_Option_MaxNumberOfMutation_3rdGroup".Translate(),
-                "Buggy_MP_Option_MaxNumberOfMutation_3rdGroup_Tooltip".Translate(), 1,
-                Validators.IntRangeValidator(0, 10));
-            ModSettings.percentChanceToHaveAMutatedGene3rdChance = Settings.GetHandle("percentChanceToHaveAMutatedGene3rdChance",
-                "Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup".Translate(),
-                "Buggy_MP_Option_ChanceToHaveAMutatedGene_3rdGroup_Tooltip".Translate(), 5,
-                Validators.IntRangeValidator(0, 100));
-
-            ModSettings.allowedMutatedXenoGene = Settings.GetHandle("allowedMutatedXenoGene",
-                "Buggy_MP_Option_AllowedMutatedXenoGene".Translate(),
-                "Buggy_MP_Option_AllowedMutatedXenoGene_Tooltip".Translate(), false);
-
-            ModSettings.allowedMutatedArchiteGenes = Settings.GetHandle("allowedMutatedArchiteGenes",
-                "Buggy_MP_Option_AllowedMutatedArchiteGenes".Translate(),
-                "Buggy_MP_Option_AllowedMutatedArchiteGenes_Tooltip".Translate(), false);
-
-            ModSettings.minimumMetabolicEffAllowed = Settings.GetHandle("minimumMetabolicEffAllowed",
-                "Buggy_MP_Option_MinimumMetabolicEffForMutatedGen".Translate(),
-                "Buggy_MP_Option_MinimumMetabolicEffForMutatedGen_Tooltip".Translate(), -5,
-                Validators.IntRangeValidator(-50, 50));
-
-            ModSettings.chanceWithGrowingCarcinoma = Settings.GetHandle("chanceWithGrowingCarcinoma",
-                "Buggy_MP_Option_ChanceWithGrowingCarcinoma".Translate(),
-                "Buggy_MP_Option_ChanceWithGrowingCarcinoma_Tooltip".Translate(), 5,
-                Validators.IntRangeValidator(0, 100));
-
-            ModSettings.chanceWithModerateToxicBuildup = Settings.GetHandle("chanceWithModerateToxicBuildup",
-                "Buggy_MP_Option_ChanceWithModerateToxicBuildup".Translate(),
-                "Buggy_MP_Option_ChanceWithModerateToxicBuildup_Tooltip".Translate(), 5,
-                Validators.IntRangeValidator(0, 100));
-
-            ModSettings.whiteListWildcardString = Settings.GetHandle("whiteListWildcardString",
-                "Buggy_MP_Option_WhiteListWildcard".Translate(),
-                "Buggy_MP_Option_WhiteListWildcard_Tooltip".Translate(), "");
-
-            ModSettings.whiteListString = Settings.GetHandle("whiteListString",
-                "Buggy_MP_Option_WhiteList".Translate(),
-                "Buggy_MP_Option_WhiteList_Tooltip".Translate(), "");
-
-            ModSettings.blackListWildcardString = Settings.GetHandle("blackListWildcardString",
-                "Buggy_MP_Option_BlackListWildcard".Translate(),
-                "Buggy_MP_Option_BlackListWildcard_Tooltip".Translate(), "");
-
-            ModSettings.blackListString = Settings.GetHandle("blackListString",
-                "Buggy_MP_Option_BlackList".Translate(),
-                "Buggy_MP_Option_BlackList_Tooltip".Translate(), "");
-
-            ModSettings.showAllGeneDefNameOnLog = Settings.GetHandle("showAllGeneDefNameOnLog",
-                "Buggy_MP_Option_ShowAllGeneDefName".Translate(),
-                "Buggy_MP_Option_ShowAllGeneDefName_Tooltip".Translate(), false);
-
-            ModSettings.debug = Settings.GetHandle("debug",
-                "Buggy_MP_Option_Debug".Translate(), "", false);
-
-            ShowAllAvailableGenes();
             GetAllGenesAfterWhiteListAndBlackList();
             HandleArchiteGenes();
+            MutatedPawnSettings.allGenesInString = ConvertGeneDefListToString(MutatedPawnSettings.allGenes);
             GetDisableViolenceGenes();
+            MutatedPawnSettings.disableViolenceGenesInString = ConvertGeneDefListToString(MutatedPawnSettings.disableViolenceGenes);
+            base.WriteSettings();
         }
 
         private void GetDisableViolenceGenes()
         {
-            ModSettings.disableViolenceGenes = new List<GeneDef>();
-            foreach (var gene in ModSettings.allGenes)
+            MutatedPawnSettings.disableViolenceGenes = new List<GeneDef>();
+            foreach (var gene in MutatedPawnSettings.allGenes)
             {
                 if (gene.disabledWorkTags.HasFlag(WorkTags.Violent))
                 {
-                    ModSettings.disableViolenceGenes.Add(gene);
+                    MutatedPawnSettings.disableViolenceGenes.Add(gene);
                 }
             }
         }
 
         private void HandleArchiteGenes()
         {
-            if (!ModSettings.allowedMutatedArchiteGenes.Value)
+            if (!MutatedPawnSettings.allowedMutatedArchiteGenes)
             {
-                ModSettings.allGenes.RemoveAll(x => x.biostatArc > 0);
-                if (ModSettings.debug)
+                MutatedPawnSettings.allGenes.RemoveAll(x => x.biostatArc > 0);
+                if (MutatedPawnSettings.debug)
                 {
-                    Log.Message($"MutatedPawn: Archite genes are not allow. {ModSettings.allGenes.Count} genes left.");
+                    Log.Message($"MutatedPawn: Archite genes are not allow. {MutatedPawnSettings.allGenes.Count} genes left.");
                 }
             }
         }
 
         private void ShowAllAvailableGenes()
         {
-            if (ModSettings.showAllGeneDefNameOnLog.Value)
+            var list = DefDatabase<GeneDef>.AllDefs.ToList();
+            Log.Message("MutatedPawn: All found genes:");
+            List<string> allGeneList = new List<string>();
+            foreach (var def in list)
             {
-                var list = DefDatabase<GeneDef>.AllDefs.ToList();
-                Log.Message("MutatedPawn: All found genes:");
-                List<string> allGeneList = new List<string>();
-                foreach (var def in list)
-                {
-                    allGeneList.Add($"{def.defName} - {def.LabelShortAdj}");
-                }
-                Log.Message(string.Join(", ", allGeneList));
+                allGeneList.Add($"{def.defName} - {def.LabelShortAdj}");
             }
+            Log.Message(string.Join(", ", allGeneList));
         }
 
         private void GetAllGenesAfterWhiteListAndBlackList()
         {
             List<GeneDef> allAvailableGenes = DefDatabase<GeneDef>.AllDefs.ToList();
-            if (ModSettings.debug)
+            if (MutatedPawnSettings.debug)
             {
                 Log.Message($"MutatedPawn: {allAvailableGenes.Count} genes found.");
             }
-
-            if (string.IsNullOrEmpty(ModSettings.whiteListWildcardString.Value.Trim()))
+            if (string.IsNullOrEmpty(MutatedPawnSettings.blackListString.Trim()))
             {
-                ModSettings.allGenes = allAvailableGenes;
-                if (ModSettings.debug)
-                {
-                    Log.Message($"MutatedPawn: No white list wildcard found. All genes are allowed.");
-                }
-            }
-            // TODO: continue while list wildcard and black list wildcard
-            if (string.IsNullOrEmpty(ModSettings.whiteListString.Value.Trim()))
-            {
-                ModSettings.allGenes = allAvailableGenes;
-                if (ModSettings.debug)
-                {
-                    Log.Message($"MutatedPawn: No white list found. All genes are allowed.");
-                }
-            }
-            else
-            {
-                var whiteList = ModSettings.whiteListString.Value.Split(',').ToList();
-                ModSettings.allGenes = allAvailableGenes.Where(x => whiteList.Contains(x.defName) || whiteList.Contains(x.LabelShortAdj)).ToList();
-                if (ModSettings.allGenes.Count < 1)
-                {
-                    if (ModSettings.debug)
-                    {
-                        ModSettings.allGenes = allAvailableGenes;
-                        Log.Message($"MutatedPawn: White list found but contains no valid gene. All genes are allowed.");
-                    }
-                }
-                else if (ModSettings.debug)
-                {
-                    Log.Message($"MutatedPawn: White list found. Only {ModSettings.allGenes.Count} genes are allowed: {string.Join(", ", ModSettings.allGenes.Select(x => $"{x.defName} - {x.LabelShortAdj}"))}");
-                }
-            }
-            if (string.IsNullOrEmpty(ModSettings.blackListString.Value.Trim()))
-            {
-                if (ModSettings.debug)
+                if (MutatedPawnSettings.debug)
                 {
                     Log.Message($"MutatedPawn: No black list found. No genes are removed.");
                 }
             }
             else
             {
-                var blackList = ModSettings.blackListString.Value.Split(',').ToList();
-                var blackListGenes = allAvailableGenes.Where(x => blackList.Contains(x.defName) || blackList.Contains(x.LabelShortAdj)).ToList();
-                ModSettings.allGenes.RemoveAll(x => blackListGenes.Contains(x));
-                if (ModSettings.debug)
+                var blackList = MutatedPawnSettings.blackListString.Split(',').ToList();
+                var blackListGenes = allAvailableGenes.Where(a =>
+                    blackList.Any(b =>
+                        (!string.IsNullOrEmpty(a.defName) && a.defName.IndexOf(b, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (!string.IsNullOrEmpty(a.LabelShortAdj) && a.LabelShortAdj.IndexOf(b, StringComparison.OrdinalIgnoreCase) >= 0))).ToList();
+                MutatedPawnSettings.allGenes = allAvailableGenes.Where(a => !blackListGenes.Contains(a)).ToList();
+                if (MutatedPawnSettings.debug)
                 {
                     if (blackListGenes.Count > 0)
                     {
@@ -223,6 +192,65 @@ namespace Buggy.RimworldMod.MutatedPawn
                     }
                 }
             }
+
+            if (string.IsNullOrEmpty(MutatedPawnSettings.whiteListString.Trim()))
+            {
+                if (MutatedPawnSettings.debug)
+                {
+                    Log.Message($"MutatedPawn: No white list found. All remaining genes are allowed.");
+                }
+            }
+            else
+            {
+                var whiteList = MutatedPawnSettings.whiteListString.Split(',').ToList();
+                var whiteListGenes = allAvailableGenes.Where(a =>
+                    whiteList.Any(b =>
+                        (!string.IsNullOrEmpty(a.defName) && a.defName.IndexOf(b, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (!string.IsNullOrEmpty(a.LabelShortAdj) && a.LabelShortAdj.IndexOf(b, StringComparison.OrdinalIgnoreCase) >= 0))).ToList();
+
+                MutatedPawnSettings.allGenes.AddRange(whiteListGenes);
+                if (whiteListGenes.Count < 1)
+                {
+                    if (MutatedPawnSettings.debug)
+                    {
+                        Log.Message($"MutatedPawn: White list found but contains no valid gene. All remaining genes are allowed.");
+                    }
+                }
+                else if (MutatedPawnSettings.debug)
+                {
+                    Log.Message($"MutatedPawn: White list found. {whiteListGenes.Count} genes are added to the allowed pool: {string.Join(", ", whiteListGenes.Select(x => $"{x.defName} - {x.LabelShortAdj}"))}");
+                }
+            }
+
+            if (MutatedPawnSettings.debug)
+            {
+                Log.Message($"MutatedPawn: Gene list after applied black and white list: {string.Join(", ", MutatedPawnSettings.allGenes.Select(x => $"{x.defName} - {x.LabelShortAdj}"))}.");
+                Log.Message($"MutatedPawn: Number of genes after applied black and white list: {MutatedPawnSettings.allGenes.Count}.");
+            }
+        }
+
+        private string ConvertGeneDefListToString(List<GeneDef> list)
+        {
+            List<string> defNameList = list.Select(g => g.defName).ToList();
+            string result = string.Join(listSeparator, defNameList);
+            if (MutatedPawnSettings.debug)
+            {
+                Log.Message($"MutatedPawn: {list.Count} gene def were converted to string.");
+            }
+            return result;
+        }
+
+        private List<GeneDef> ConvertStringToGeneDefList(string str)
+        {
+            List<string> list = str.Split(new string[] { listSeparator }, StringSplitOptions.None).ToList();
+            List<GeneDef> result = list.Select(defName => DefDatabase<GeneDef>.GetNamedSilentFail(defName))
+                  .Where(gene => gene != null).ToList();
+            if (MutatedPawnSettings.debug)
+            {
+                Log.Message($"MutatedPawn: {result.Count} gene def were converted from string.");
+            }
+            return result;
+
         }
     }
 }

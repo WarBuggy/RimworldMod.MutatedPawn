@@ -16,12 +16,6 @@
 			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
 		</li>
 		<li>
-			<packageId>UnlimitedHugs.HugsLib</packageId>
-			<displayName>HugsLib</displayName>
-			<downloadUrl>https://github.com/UnlimitedHugs/RimworldHugsLib/releases/latest</downloadUrl>
-			<steamWorkshopUrl>steam://url/CommunityFilePage/818773962</steamWorkshopUrl>
-		</li>
-		<li>
 			<packageId>ludeon.rimworld.biotech</packageId>
 			<displayName>Biotech</displayName>
 		</li>
@@ -31,7 +25,8 @@
 [*]3 different chances to have mutations, each with its own max mutation number and chance.
 [*]Chance to develop a random mutation for a pawn with a growing carcinoma. Check every 5000 ticks (a day has 60k ticks). Set to 0% to disable this. Thanks Jdalt40 for the suggestion.
 [*]Chance to develop a random mutation for a pawn with moderate (or worse) toxic buildup. Check every 5000 ticks (a day has 60k ticks). Set to 0% to disable this. Thanks CrackaJack for the suggestion.
-[*]White list and black list mechanism to control the list of available genes for mutation. I have troubles create a good UX for these options. I have to resort to text field input. Sorry guys! You can find the name for the genes if you use the included options to print them all to dev console log.
+[*]From 1.6, white list and black list mechanism can be used to control the list of available genes for mutation. I have troubles create a good UX for these options. I have to resort to text field input. Sorry guys! You can find the name for the genes if you use the included options to print them all to dev console log.
+[*]For white and black listing, wildcard can be used. For example, "hair" means any gene that contains "hair" in its defName or LabelShortAdj. White list overides black list.
 [*]Mutated genes can be endogene or xenogene.
 [*]Allow archite genes.
 [*]The minimum metabolic efficiency allowed, used ONLY by this mod, when deciding a mutation can happen or not. Thank 沙坡村大师 for the suggestion.
@@ -55,9 +50,13 @@ Github: https://github.com/WarBuggy/RimworldMod.MutatedPawn.git
 Cheers!
 
 Version history
-[b]v0.9.1[/b]
+[b]v0.10[/b]
 [list]
 [*]Add compatibility for 1.6.
+[*]Remove HugsLib dependency. All previous mod settings are lost. Please visit the new settings.
+[*]Black/white listing entries are treated as wildcard. "hair" will include any gene that has "hair" (case-insensitive) in defName or LabelShortAdj.
+[*]White list will override black list. For example, you can black list anything with "hair", then white list "Hair_InkBlack".
+[*]Add custom tick time for both growing carcinoma and toxic build up mutation.  Default is still 5k. Thanks Arthur GC for the suggestion.
 [/list]
 [b]v0.9[/b]
 [list]

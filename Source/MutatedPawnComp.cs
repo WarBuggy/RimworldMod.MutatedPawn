@@ -10,7 +10,6 @@ namespace Buggy.RimworldMod.MutatedPawn
     {
         public string MutationString = "";
 
-        private static readonly int CheckInternal = 5000;
         private static readonly float ToxicBuildUpModerateSeverity = 0.4f;
 
         public List<string> CreateMutationList()
@@ -40,17 +39,23 @@ namespace Buggy.RimworldMod.MutatedPawn
             {
                 return;
             }
-            if (!pawn.IsHashIntervalTick(CheckInternal))
+            var debug = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().debug;
+            var tickPerGrowingCarcinomaCheck = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().tickPerGrowingCarcinomaCheck;
+            if (pawn.IsHashIntervalTick(tickPerGrowingCarcinomaCheck))
             {
-                return;
+                if (!Find.WorldPawns.Contains(pawn))
+                {
+                    HandleGrowingCarinoma(pawn, debug);
+                }
             }
-            if (Find.WorldPawns.Contains(pawn))
+            var tickPerToxicBuildupCheck = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().tickPerToxicBuildupCheck;
+            if (pawn.IsHashIntervalTick(tickPerToxicBuildupCheck))
             {
-                return;
-            };
-            var debug = ModSettings.debug.Value;
-            HandlePoluttion(pawn, debug);
-            HandleGrowingCarinoma(pawn, debug);
+                if (!Find.WorldPawns.Contains(pawn))
+                {
+                    HandlePoluttion(pawn, debug);
+                }
+            }
         }
 
         private void HandleGrowingCarinoma(Pawn pawn, bool debug)
@@ -63,7 +68,7 @@ namespace Buggy.RimworldMod.MutatedPawn
                 }
                 return;
             }
-            var chanceWithGrowingCarcinoma = ModSettings.chanceWithGrowingCarcinoma.Value;
+            var chanceWithGrowingCarcinoma = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().chanceWithGrowingCarcinoma;
             if (chanceWithGrowingCarcinoma <= 0)
             {
                 return;
@@ -77,7 +82,7 @@ namespace Buggy.RimworldMod.MutatedPawn
             {
                 return;
             }
-            List<GeneDef> availableGenes = new List<GeneDef>(ModSettings.allGenes);
+            List<GeneDef> availableGenes = new List<GeneDef>(((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().allGenes);
             var pawnGenes = pawn.genes.GenesListForReading.Select(x => x.def).ToList();
             availableGenes.RemoveAll(x => pawnGenes.Contains(x));
             if (availableGenes.Count < 1)
@@ -104,7 +109,7 @@ namespace Buggy.RimworldMod.MutatedPawn
                 }
                 return;
             }
-            var chanceWithModerateToxicBuildup = ModSettings.chanceWithModerateToxicBuildup.Value;
+            var chanceWithModerateToxicBuildup = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().chanceWithModerateToxicBuildup;
             var chance = UnityEngine.Random.Range(0f, 100f);
             if (debug)
             {
@@ -114,7 +119,7 @@ namespace Buggy.RimworldMod.MutatedPawn
             {
                 return;
             }
-            List<GeneDef> availableGenes = new List<GeneDef>(ModSettings.allGenes);
+            List<GeneDef> availableGenes = new List<GeneDef>(((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().allGenes);
             var pawnGenes = pawn.genes.GenesListForReading.Select(x => x.def).ToList();
             availableGenes.RemoveAll(x => pawnGenes.Contains(x));
             if (availableGenes.Count < 1)

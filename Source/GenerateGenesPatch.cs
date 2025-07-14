@@ -15,23 +15,23 @@ namespace Buggy.RimworldMod.MutatedPawn
         {
             var chanceDictionary = new List<(int, int)>()
             {
-                (ModSettings.maxMutatedGenesAllowed1stChance.Value, ModSettings.percentChanceToHaveAMutatedGene1stChance.Value),
-                (ModSettings.maxMutatedGenesAllowed2ndChance.Value, ModSettings.percentChanceToHaveAMutatedGene2ndChance.Value),
-                (ModSettings.maxMutatedGenesAllowed3rdChance.Value, ModSettings.percentChanceToHaveAMutatedGene3rdChance.Value),
+                (((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().maxMutatedGenesAllowed1stChance, ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().percentChanceToHaveAMutatedGene1stChance),
+                (((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().maxMutatedGenesAllowed2ndChance, ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().percentChanceToHaveAMutatedGene2ndChance),
+                (((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().maxMutatedGenesAllowed3rdChance, ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().percentChanceToHaveAMutatedGene3rdChance),
             };
-            var allowedMutatedXenoGene = ModSettings.allowedMutatedXenoGene.Value;
-            var minMetabolicEff = ModSettings.minimumMetabolicEffAllowed.Value;
-            var allGenes = new List<GeneDef>(ModSettings.allGenes);
-            var debug = ModSettings.debug.Value;
-
+            var allowedMutatedXenoGene = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().allowedMutatedXenoGene;
+            var minMetabolicEff = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().minimumMetabolicEffAllowed;
+            var allGenes = new List<GeneDef>(((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().allGenes);
+            var disableViolenceGenes = new List<GeneDef>(((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().disableViolenceGenes);
+            var debug = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().debug;
             if (debug)
             {
                 var geneset = CreateGeneSetFromPawn(pawn);
                 Log.Message($"MutatedPawn: Pawn: {pawn.LabelShort}, current metabolic efficiency {geneset.MetabolismTotal}.");
                 Log.Message($"MutatedPawn: {allGenes.Count} genes found.");
-                Log.Message($"MutatedPawn: {ModSettings.disableViolenceGenes.Count} non-violent genes found: {string.Join(",", ModSettings.disableViolenceGenes)}");
+                Log.Message($"MutatedPawn: {disableViolenceGenes.Count} non-violent genes found: {string.Join(",", disableViolenceGenes)}");
             }
-            RemoveUnwantedGenes(allGenes, pawn, request, debug);
+            RemoveUnwantedGenes(allGenes, disableViolenceGenes, pawn, request, debug);
             if (allGenes.Count < 1)
             {
                 if (debug)
@@ -116,8 +116,8 @@ namespace Buggy.RimworldMod.MutatedPawn
             mutatedPawnComp.MutationString = string.Join(",", mutations);
         }
 
-        private static void RemoveUnwantedGenes(List<GeneDef> allGenes, Pawn pawn,
-            PawnGenerationRequest request, bool debug)
+        private static void RemoveUnwantedGenes(List<GeneDef> allGenes, List<GeneDef> disableViolenceGenes, 
+            Pawn pawn, PawnGenerationRequest request, bool debug)
         {
             var geneDefsForReading = pawn.genes.GenesListForReading.Select(x => x.def).ToList();
             allGenes.RemoveAll(x => geneDefsForReading.Contains(x));
@@ -127,7 +127,7 @@ namespace Buggy.RimworldMod.MutatedPawn
             }
             if (request.MustBeCapableOfViolence)
             {
-                allGenes.RemoveAll(x => ModSettings.disableViolenceGenes.Contains(x));
+                allGenes.RemoveAll(x => disableViolenceGenes.Contains(x));
                 if (debug)
                 {
                     Log.Message($"MutatedPawn: Pawn must be capable of violent. {allGenes.Count} genes left.");
