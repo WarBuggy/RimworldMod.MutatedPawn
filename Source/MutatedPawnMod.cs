@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime;
 using UnityEngine;
-using UnityEngine.Windows;
 using Verse;
 
 namespace Buggy.RimworldMod.MutatedPawn
@@ -28,10 +26,25 @@ namespace Buggy.RimworldMod.MutatedPawn
         private void Initialize()
         {
             if (initialized) return;
-            initialized = true;
 
-            MutatedPawnSettings.allGenes = ConvertStringToGeneDefList(MutatedPawnSettings.allGenesInString);
-            MutatedPawnSettings.disableViolenceGenes = ConvertStringToGeneDefList(MutatedPawnSettings.disableViolenceGenesInString);
+            try
+            {
+                MutatedPawnSettings.allGenes = ConvertStringToGeneDefList(MutatedPawnSettings.allGenesInString);
+                MutatedPawnSettings.disableViolenceGenes = ConvertStringToGeneDefList(MutatedPawnSettings.disableViolenceGenesInString);
+                initialized = true;
+            }
+            catch (Exception e)
+            {
+                if (MutatedPawnSettings.debug)
+                {
+                    Log.Message($"MutatedPawn: Failed to process stored black/white list. Exception: {e}.");
+                    Log.Message($"MutatedPawn: Failed to process stored black/white list. All genes are made available.");
+                    MutatedPawnSettings.allGenes = DefDatabase<GeneDef>.AllDefs.ToList();
+                    HandleArchiteGenes();
+                    GetDisableViolenceGenes();
+                    initialized = true;
+                }
+            }
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
@@ -167,6 +180,7 @@ namespace Buggy.RimworldMod.MutatedPawn
             }
             if (string.IsNullOrEmpty(MutatedPawnSettings.blackListString.Trim()))
             {
+                MutatedPawnSettings.allGenes = allAvailableGenes.ToList();
                 if (MutatedPawnSettings.debug)
                 {
                     Log.Message($"MutatedPawn: No black list found. No genes are removed.");
