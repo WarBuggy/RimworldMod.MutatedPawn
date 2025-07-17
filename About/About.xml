@@ -50,6 +50,11 @@ Github: https://github.com/WarBuggy/RimworldMod.MutatedPawn.git
 Cheers!
 
 Version history
+[b]v0.10.1[/b]
+[list]
+[*]Make sure ticks per mutation check are always in bound (more than 500 and less than 100000).
+[*]Change the way settings for ticks per mutation check are handle internally.
+[/list]
 [b]v0.10[/b]
 [list]
 [*]Add compatibility for 1.6.

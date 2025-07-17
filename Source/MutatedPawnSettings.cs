@@ -1,31 +1,36 @@
 ﻿using System.Collections.Generic;
 using Verse;
+using Verse.Noise;
 
 namespace Buggy.RimworldMod.MutatedPawn
 {
     public class MutatedPawnSettings : ModSettings
     {
-        public int maxMutatedGenesAllowed1stChance;
-        public int percentChanceToHaveAMutatedGene1stChance;
+        public int maxMutatedGenesAllowed1stChance = 1;
+        public int percentChanceToHaveAMutatedGene1stChance = 33;
 
-        public int maxMutatedGenesAllowed2ndChance;
-        public int percentChanceToHaveAMutatedGene2ndChance;
+        public int maxMutatedGenesAllowed2ndChance = 2;
+        public int percentChanceToHaveAMutatedGene2ndChance = 15;
 
-        public int maxMutatedGenesAllowed3rdChance;
-        public int percentChanceToHaveAMutatedGene3rdChance;
+        public int maxMutatedGenesAllowed3rdChance = 1;
+        public int percentChanceToHaveAMutatedGene3rdChance = 5;
 
-        public bool allowedMutatedXenoGene;
-        public bool allowedMutatedArchiteGenes;
-        public int minimumMetabolicEffAllowed;
+        public bool allowedMutatedXenoGene = false;
+        public bool allowedMutatedArchiteGenes = false;
+        public int minimumMetabolicEffAllowed = -5;
 
-        public int chanceWithGrowingCarcinoma;
-        public int tickPerGrowingCarcinomaCheck;
+        public int chanceWithGrowingCarcinoma = 5;
+        public static int DEFAULT_TICK_PER_CARCINOMA_CHECK = 50;
+        public static int TICK_PER_CARCINOMA_CHECK_MULTIPLIER = 100;
+        public int tickPerGrowingCarcinomaCheck = DEFAULT_TICK_PER_CARCINOMA_CHECK * TICK_PER_CARCINOMA_CHECK_MULTIPLIER;
 
-        public int chanceWithModerateToxicBuildup;
-        public int tickPerToxicBuildupCheck;
+        public int chanceWithModerateToxicBuildup = 5;
+        public static int DEFAULT_TICK_PER_TOXIC_BUILDUP_CHECK = 50;
+        public static int TICK_PER_TOXIC_BUILDUP_CHECK_MULTIPLIER = 100;
+        public int tickPerToxicBuildupCheck = DEFAULT_TICK_PER_TOXIC_BUILDUP_CHECK * TICK_PER_TOXIC_BUILDUP_CHECK_MULTIPLIER;
 
-        public string blackListString;
-        public string whiteListString;
+        public string blackListString = "";
+        public string whiteListString = "";
 
         public bool debug;
 
@@ -51,10 +56,10 @@ namespace Buggy.RimworldMod.MutatedPawn
             Scribe_Values.Look(ref minimumMetabolicEffAllowed, "minimumMetabolicEffAllowed", -5, false);
 
             Scribe_Values.Look(ref chanceWithGrowingCarcinoma, "chanceWithGrowingCarcinoma", 5, false);
-            Scribe_Values.Look(ref tickPerGrowingCarcinomaCheck, "tickPerGrowingCarcinomaCheck", 5000, false);
+            Scribe_Values.Look(ref tickPerGrowingCarcinomaCheck, "tickPerGrowingCarcinomaCheck", DEFAULT_TICK_PER_CARCINOMA_CHECK * TICK_PER_CARCINOMA_CHECK_MULTIPLIER, false);
 
             Scribe_Values.Look(ref chanceWithModerateToxicBuildup, "chanceWithModerateToxicBuildup", 5, false);
-            Scribe_Values.Look(ref tickPerToxicBuildupCheck, "tickPerToxicBuildupCheck", 5000, false);
+            Scribe_Values.Look(ref tickPerToxicBuildupCheck, "tickPerToxicBuildupCheck", DEFAULT_TICK_PER_TOXIC_BUILDUP_CHECK * TICK_PER_TOXIC_BUILDUP_CHECK_MULTIPLIER, false);
 
             Scribe_Values.Look(ref blackListString, "blackListString", "", false);
             Scribe_Values.Look(ref whiteListString, "whiteListString", "", false);

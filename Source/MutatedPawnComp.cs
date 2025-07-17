@@ -40,7 +40,7 @@ namespace Buggy.RimworldMod.MutatedPawn
                 return;
             }
             var debug = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().debug;
-            var tickPerGrowingCarcinomaCheck = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().tickPerGrowingCarcinomaCheck;
+            var tickPerGrowingCarcinomaCheck = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().tickPerGrowingCarcinomaCheck * MutatedPawnSettings.TICK_PER_CARCINOMA_CHECK_MULTIPLIER;
             if (pawn.IsHashIntervalTick(tickPerGrowingCarcinomaCheck))
             {
                 if (!Find.WorldPawns.Contains(pawn))
@@ -48,7 +48,7 @@ namespace Buggy.RimworldMod.MutatedPawn
                     HandleGrowingCarinoma(pawn, debug);
                 }
             }
-            var tickPerToxicBuildupCheck = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().tickPerToxicBuildupCheck;
+            var tickPerToxicBuildupCheck = ((Mod)LoadedModManager.GetMod<MutatedPawnMod>()).GetSettings<MutatedPawnSettings>().tickPerToxicBuildupCheck * MutatedPawnSettings.TICK_PER_TOXIC_BUILDUP_CHECK_MULTIPLIER;
             if (pawn.IsHashIntervalTick(tickPerToxicBuildupCheck))
             {
                 if (!Find.WorldPawns.Contains(pawn))

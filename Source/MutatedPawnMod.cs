@@ -17,9 +17,21 @@ namespace Buggy.RimworldMod.MutatedPawn
            : base(content)
         {
             MutatedPawnSettings = base.GetSettings<MutatedPawnSettings>();
+            if (MutatedPawnSettings.tickPerGrowingCarcinomaCheck > 1000 || MutatedPawnSettings.tickPerGrowingCarcinomaCheck < 1)
+            {
+                var defaultDisplayValue = MutatedPawnSettings.DEFAULT_TICK_PER_CARCINOMA_CHECK * MutatedPawnSettings.TICK_PER_CARCINOMA_CHECK_MULTIPLIER;
+                MutatedPawnSettings.tickPerGrowingCarcinomaCheck = MutatedPawnSettings.DEFAULT_TICK_PER_CARCINOMA_CHECK;
+                Log.Message($"MutatedPawn: tickPerGrowingCarcinomaCheck cannot be smaller than 1 or larger than 100000. Revert to the default value of {defaultDisplayValue}. Please check mod setting!");
+            }
+            if (MutatedPawnSettings.tickPerToxicBuildupCheck > 1000 || MutatedPawnSettings.tickPerToxicBuildupCheck < 1)
+            {
+                var defaultDisplayValue = MutatedPawnSettings.DEFAULT_TICK_PER_TOXIC_BUILDUP_CHECK * MutatedPawnSettings.TICK_PER_TOXIC_BUILDUP_CHECK_MULTIPLIER;
+                MutatedPawnSettings.tickPerToxicBuildupCheck = MutatedPawnSettings.DEFAULT_TICK_PER_TOXIC_BUILDUP_CHECK;
+                Log.Message($"MutatedPawn: tickPerToxicBuildupCheck cannot be smaller than 1 or larger than 100000. Revert to the default value of {defaultDisplayValue}. Please check mod setting!");
+            }
             LongEventHandler.QueueLongEvent(() =>
             {
-                Initialize(); 
+                Initialize();
             }, "MutatedPawn_Initialize", false, null);
         }
 
@@ -92,13 +104,13 @@ namespace Buggy.RimworldMod.MutatedPawn
 
             listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_ChanceWithGrowingCarcinoma".Translate()}: {MutatedPawnSettings.chanceWithGrowingCarcinoma}%", -1, "Buggy_MP_Option_ChanceWithGrowingCarcinoma_Tooltip".Translate());
             MutatedPawnSettings.chanceWithGrowingCarcinoma = (int)listingStandard.Slider(MutatedPawnSettings.chanceWithGrowingCarcinoma, 0f, 100f);
-            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_TickPerGrowingCarcinomaCheck".Translate()}: {MutatedPawnSettings.tickPerGrowingCarcinomaCheck}", -1, "Buggy_MP_Option_TickPerGrowingCarcinomaCheck_Tooltip".Translate());
-            MutatedPawnSettings.tickPerGrowingCarcinomaCheck = (int)listingStandard.Slider(MutatedPawnSettings.tickPerGrowingCarcinomaCheck, 1000f, 100000f);
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_TickPerGrowingCarcinomaCheck".Translate()}: {MutatedPawnSettings.tickPerGrowingCarcinomaCheck * 100}", -1, "Buggy_MP_Option_TickPerGrowingCarcinomaCheck_Tooltip".Translate());
+            MutatedPawnSettings.tickPerGrowingCarcinomaCheck = (int)listingStandard.Slider(MutatedPawnSettings.tickPerGrowingCarcinomaCheck, 5f, 1000f);
 
             listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_ChanceWithModerateToxicBuildup".Translate()}: {MutatedPawnSettings.chanceWithModerateToxicBuildup}%", -1, "Buggy_MP_Option_ChanceWithModerateToxicBuildup_Tooltip".Translate());
             MutatedPawnSettings.chanceWithModerateToxicBuildup = (int)listingStandard.Slider(MutatedPawnSettings.chanceWithModerateToxicBuildup, 0f, 100f);
-            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_TickPerToxicBuildupCheck".Translate()}: {MutatedPawnSettings.tickPerToxicBuildupCheck}", -1, "Buggy_MP_Option_TickPerToxicBuildupCheck_Tooltip".Translate());
-            MutatedPawnSettings.tickPerToxicBuildupCheck = (int)listingStandard.Slider(MutatedPawnSettings.tickPerToxicBuildupCheck, 1000f, 100000f);
+            listingStandard.Label((TaggedString)$"{"Buggy_MP_Option_TickPerToxicBuildupCheck".Translate()}: {MutatedPawnSettings.tickPerToxicBuildupCheck * 100}", -1, "Buggy_MP_Option_TickPerToxicBuildupCheck_Tooltip".Translate());
+            MutatedPawnSettings.tickPerToxicBuildupCheck = (int)listingStandard.Slider(MutatedPawnSettings.tickPerToxicBuildupCheck, 5f, 1000f);
 
             listingStandard.Label("Buggy_MP_Option_BlackList".Translate(), -1, "Buggy_MP_Option_BlackList_Tooltip".Translate());
             MutatedPawnSettings.blackListString = listingStandard.TextEntry(MutatedPawnSettings.blackListString, 3);
